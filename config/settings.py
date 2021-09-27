@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todoapp.apps.TodoappConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -85,6 +88,12 @@ DATABASES = {
     }
 }
 SQLALCHEMY_OPTIONS = {}
+
+ENGINE = create_engine('postgresql://username:password@localhost/todoapp2')
+SESSION = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
+
+Session = SESSION()
+Engine = ENGINE()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
