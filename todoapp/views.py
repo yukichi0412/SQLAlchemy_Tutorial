@@ -6,8 +6,9 @@ from rest_framework import viewsets, filters
 from .models import Category
 from .serializer import CategorySerializer
 
-from config.settings import Session
+from config.db import make_session
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    Session = make_session()
     queryset = Session.query(Category).all()
     serializer_class = CategorySerializer

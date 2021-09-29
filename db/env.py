@@ -5,6 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from todoapp.models import Category
+from config.db import Base, create_engine
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -17,11 +19,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import todoapp.models
-target_metadata = todoapp.models.Base.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -65,9 +63,12 @@ def run_migrations_online():
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
+    #追記
+    url = config.get_main_option("sqlalchemy.url")
 
     with connectable.connect() as connection:
         context.configure(
+            url=url,
             connection=connection, target_metadata=target_metadata
         )
 

@@ -93,7 +93,6 @@ ENGINE = create_engine('postgresql://username:password@localhost/todoapp2')
 SESSION = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
 
 Session = SESSION()
-Engine = ENGINE()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
